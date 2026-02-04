@@ -1,0 +1,38 @@
+ORG 0000H
+
+    MOV A,#06H
+    MOV R0, A 
+    MOV A,#05H
+    MOV R1, A
+
+COMPARE_LOOP:
+    MOV A,R0
+    JZ CHECK_R1_ZERO
+
+    MOV A, R1
+    JZ A_GREATER
+
+    DEC R0
+    DEC R1
+    SJMP COMPARE_LOOP
+
+CHECK_R1_ZERO:
+    MOV A, R1
+    JZ EQUAL
+    SJMP A_LESS
+
+A_GREATER:
+    MOV 52H, #01H
+    SJMP DONE
+
+A_LESS:
+    MOV 52H, #0FFH
+    SJMP DONE
+
+EQUAL:
+    MOV 52H, #00H
+
+DONE:
+    SJMP DONE
+
+END
